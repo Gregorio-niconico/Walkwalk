@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 public class UserDB {
     private static String TAG="UserDB";
 
-    //用户登录检查
+    //用户登录
     public static int userSignIn(String name,String pwd){
         mysqlDB.con=mysqlDB.getConnection();
         String sql="select userPwd from user_info where userName=?";
@@ -54,4 +54,6 @@ public class UserDB {
         }
         return 1;
     }
+    //用户注册
+//    public static int userSignUp
 }
