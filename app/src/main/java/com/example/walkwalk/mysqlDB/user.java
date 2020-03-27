@@ -10,7 +10,6 @@ public class user {
         private String password;
         private String sex;
         private String age;
-        private String email;
 
         public String getId() {
             return id;
@@ -52,13 +51,6 @@ public class user {
             this.age = age;
         }
 
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
     }
 
 }
