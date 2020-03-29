@@ -96,12 +96,12 @@ public class UserDB {
             return false;
     }
     //获取当前用户
-    public static User Getuser(String id) {
+    public static User Getuser(String userName) {
         mysqlDB.con = mysqlDB.getConnection();
-        String sql = "select * from 11user where Id=?";
+        String sql = "select * from user_info where userName=?";
         try {
             mysqlDB.stmt = mysqlDB.con.prepareStatement(sql);
-            mysqlDB.stmt.setString(1, id);
+            mysqlDB.stmt.setString(1,userName);
             mysqlDB.rs = mysqlDB.stmt.executeQuery();
 
         } catch (SQLException e) {
@@ -114,8 +114,11 @@ public class UserDB {
             if (mysqlDB.rs.next())
             {
                 my.setId(mysqlDB.rs.getString(1));
-                my.setPassword(mysqlDB.rs.getString(2));
-//                my.setEmail(mysqlDB.rs.getString(8));
+                my.setName(mysqlDB.rs.getString(2));
+                my.setPassword(mysqlDB.rs.getString(3));
+                my.setSex(mysqlDB.rs.getString(4));
+                my.setAge(mysqlDB.rs.getString(5));
+                Log.d(TAG, "Getuser: "+my.getName());
                 return my;
             }
 

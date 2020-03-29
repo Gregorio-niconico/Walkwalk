@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkwalk.mysqlDB.UserDB;
+import com.example.walkwalk.mysqlDB.user;
 
 
 public class login extends AppCompatActivity implements View.OnClickListener{
@@ -51,7 +52,17 @@ public class login extends AppCompatActivity implements View.OnClickListener{
                     switch (ans){
                         case 0:
                             now = "登录成功！";
-                            Intent intent1 = new Intent(login.this,MainActivity.class);
+                            String userName=user.myself.getName();
+                            String userPwd=user.myself.getPassword();
+                            String userSex=user.myself.getSex();
+                            String userAge=user.myself.getAge();
+                            Intent intent1 = new Intent(login.this,HomeActivity.class);
+                            Log.d(TAG, "用户："+userAge+" "+userName+" ");
+
+                            intent1.putExtra("UserName",userName);
+                            intent1.putExtra("UserPwd",userPwd);
+                            intent1.putExtra("UserSex",userSex);
+                            intent1.putExtra("UserAge",userAge);
                             startActivity(intent1);
                             break;
                         case 1:
@@ -105,6 +116,11 @@ public class login extends AppCompatActivity implements View.OnClickListener{
         @Override
         public void run() {
             ans= UserDB.userSignIn(user_name,user_pwd);
+            if(ans==0){
+                user.myself=UserDB.Getuser(user_name);
+                Log.d(TAG, "当前=用户信息："+user.myself.getId()+" "+
+                        user.myself.getName()+" "+user.myself.getSex()+" "+user.myself.getAge());
+            }
         }
         public int getAns(){
             return ans;
