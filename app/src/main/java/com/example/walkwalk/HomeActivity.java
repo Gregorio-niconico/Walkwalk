@@ -8,40 +8,27 @@ import com.example.walkwalk.ViewPaper.BottomAdapter;
 import com.example.walkwalk.ViewPaper.MyInfoFragment;
 import com.example.walkwalk.ViewPaper.SportsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+    private DrawerLayout mDrawerLayout;
     private BottomNavigationView mBv;
     private ViewPager mVp;
     private static String TAG="主页面";
     private String user_name,user_pwd,user_sex,user_age;
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.tab_sport:
-//                    mTextMessage.setText(R.string.title_sport);
-//                    return true;
-//                case R.id.tab_analyze:
-//                    mTextMessage.setText(R.string.title_analyze);
-//                    return true;
-//                case R.id.tab_my:
-//                    mTextMessage.setText(R.string.title_myinfo);
-//                    return true;
-//            }
-//            return false;
-//        }
-//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +45,28 @@ public class HomeActivity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_home_w);
         }
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
+        //加载toolbar
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBar actionBar=getSupportActionBar();
+        //设置标题栏的按钮效果
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.center);
+        }
+        NavigationView cenavView=(NavigationView)findViewById(R.id.nav_ceview);
+        cenavView.setCheckedItem(R.id.nav_myinfo);
+        cenavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
         initView();
     }
+    //初始化导航栏
     private void initView() {
         mBv = (BottomNavigationView) findViewById(R.id.nav_view);
         mVp = (ViewPager) findViewById(R.id.viewpaper);
@@ -118,6 +123,7 @@ public class HomeActivity extends AppCompatActivity {
         //                });
     }
 
+    //初始化ViewPaper
     private void setupViewPager(ViewPager viewPager) {
         BottomAdapter adapter = new BottomAdapter(getSupportFragmentManager());
         adapter.addFragment(new SportsFragment());
@@ -126,5 +132,20 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
+    //侧边栏菜单的点击事件
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            //HomeAsUp按钮默认值都是android.R.id.home
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_myinfo:
+                break;
+            case R.id.nav_collection:
+                break;
+                default:
+        }
+        return true;
+    }
 }

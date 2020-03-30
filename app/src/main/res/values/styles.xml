@@ -13,6 +13,12 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="AppTheme.NoActionBarE" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--用来适配toolbar的新bar-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <!--checkBox样式 -->
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorPrimaryDark</item>

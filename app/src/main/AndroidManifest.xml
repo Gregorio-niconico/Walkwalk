@@ -13,7 +13,10 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home"></activity>
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBarE">
+
+        </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".login">
             <intent-filter>

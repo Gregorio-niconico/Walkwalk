@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/tab_my"
-        android:icon="@mipmap/tab_man_selector"
+        android:icon="@mipmap/tab_woman_selector"
         android:title="@string/title_myinfo" />
 
 </menu>

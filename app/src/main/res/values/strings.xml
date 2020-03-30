@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">walkwalk</string>
+    <string name="app_name">步步</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_sport">运动</string>
     <string name="title_analyze">分析</string>
