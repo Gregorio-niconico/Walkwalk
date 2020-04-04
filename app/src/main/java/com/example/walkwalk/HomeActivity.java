@@ -1,8 +1,21 @@
 package com.example.walkwalk;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.example.walkwalk.ViewPaper.AnalyzeFragment;
 import com.example.walkwalk.ViewPaper.BottomAdapter;
 import com.example.walkwalk.ViewPaper.MyInfoFragment;
@@ -14,14 +27,24 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -29,10 +52,10 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager mVp;
     private static String TAG="主页面";
     private String user_name,user_pwd,user_sex,user_age;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
         Intent intent=getIntent();
         user_name=intent.getStringExtra("UserName");
         user_pwd=intent.getStringExtra("UserPwd");
@@ -45,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         }else{
             setContentView(R.layout.activity_home_w);
         }
+
         //加载toolbar
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +89,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         initView();
+
+
     }
+
     //初始化导航栏
     private void initView() {
         mBv = (BottomNavigationView) findViewById(R.id.nav_view);
@@ -147,5 +174,20 @@ public class HomeActivity extends AppCompatActivity {
                 default:
         }
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
