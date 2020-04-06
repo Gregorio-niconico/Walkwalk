@@ -28,7 +28,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.38'
-    compile 'com.android.support:design:24.2.1'
+    implementation 'com.android.support:design:24.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 

@@ -3,6 +3,7 @@ package com.example.walkwalk;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.os.Bundle;
 
 import com.baidu.location.BDLocation;
@@ -38,6 +39,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.center);
         }
+        //获取侧边栏实体
         NavigationView cenavView=(NavigationView)findViewById(R.id.nav_ceview);
         cenavView.setCheckedItem(R.id.nav_myinfo);
         cenavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -86,6 +89,17 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 mDrawerLayout.closeDrawers();
                 return true;
+            }
+        });
+        View headView=cenavView.inflateHeaderView(R.layout.nav_header);
+        TextView headName=(TextView)headView.findViewById(R.id.nac_username);
+        ImageView head_iv=(ImageView) headView.findViewById(R.id.icon_image);
+        headName.setText(user_name);
+        head_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomeActivity.this,MyInfoActivity.class);
+                startActivity(intent);
             }
         });
         initView();
