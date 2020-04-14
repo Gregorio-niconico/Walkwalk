@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -46,6 +47,7 @@ public class SportsFragment extends Fragment {
     private LocationClientOption locationOption;
     private MyLocationListener myListener = new MyLocationListener();
     private boolean isFirstLocate=true;
+    private SwipeRefreshLayout swipeRefresh;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +64,14 @@ public class SportsFragment extends Fragment {
         mBaiduMap=mapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
         mBaiduMap.setMyLocationEnabled(true);
+        swipeRefresh = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPink);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshMap();
+            }
+        });
         return view;
     }
 
@@ -96,6 +106,19 @@ public class SportsFragment extends Fragment {
         }
     }
 
+    private void refreshMap(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    requestLocation();
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
     //请求定位
     private void requestLocation() {
         initLocationOption();
@@ -203,33 +226,6 @@ public class SportsFragment extends Fragment {
         }
     }
 
-//    public class MyLocationListener implements BDLocationListener {
-//        @Override
-//        public void onReceiveLocation(BDLocation bdLocation) {
-//            StringBuilder currentPosition = new StringBuilder();
-//            currentPosition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
-//            currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
-//            currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
-//            currentPosition.append("省：").append(bdLocation.getProvince()).append("\n");
-//            currentPosition.append("市：").append(bdLocation.getCity()).append("\n");
-//            currentPosition.append("区：").append(bdLocation.getDistrict()).append("\n");
-//            currentPosition.append("街道：").append(bdLocation.getStreet()).append("\n");
-//
-//            currentPosition.append("定位方式：");
-//            if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-//                currentPosition.append("NetWork");
-//            } else if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
-//                currentPosition.append("GPS");
-//            }
-//            Log.d(TAG, "定位：" + currentPosition);
-//            SportsFragment.setTextView(currentPosition);
-////            positionText.setText(currentPosition);
-//            if (bdLocation.getLocType() == BDLocation.TypeGpsLocation ||
-//                    bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-////                navigationTo(bdLocation);
-//            }
-//        }
-//    }
 
     public  void setTextView(StringBuilder str) {
         positionText.setText(str);

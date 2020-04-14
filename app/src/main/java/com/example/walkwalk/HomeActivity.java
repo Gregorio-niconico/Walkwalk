@@ -54,11 +54,13 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager mVp;
     private static String TAG="主页面";
     private String user_name,user_pwd,user_sex,user_age;
+    private int user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         Intent intent=getIntent();
+        user_id=intent.getIntExtra("UserId",0);
         user_name=intent.getStringExtra("UserName");
         user_pwd=intent.getStringExtra("UserPwd");
         user_sex=intent.getStringExtra("UserSex");
@@ -99,6 +101,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(HomeActivity.this,MyInfoActivity.class);
+                intent.putExtra("userId",user_id);
+                intent.putExtra("password",user_pwd);
+                intent.putExtra("name",user_name);
                 startActivity(intent);
             }
         });

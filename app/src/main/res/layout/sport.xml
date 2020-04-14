@@ -2,14 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-   <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:clickable="true">
-    </com.baidu.mapapi.map.MapView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+       <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true">
+        </com.baidu.mapapi.map.MapView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/position_text_view"
         android:layout_width="wrap_content"

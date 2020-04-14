@@ -62,7 +62,7 @@ public class UserDB {
                 return 1;
             String sql ="insert into user_info(userId,userName,userPwd,sex,age)value(?,?,?,?,?)";
             mysqlDB.stmt = mysqlDB.con.prepareStatement(sql);
-            mysqlDB.stmt.setString(1,user.getId());
+            mysqlDB.stmt.setInt(1,user.getId());
             mysqlDB.stmt.setString(2,user.getName());
             mysqlDB.stmt.setString(3,user.getPassword());
             mysqlDB.stmt.setString(4,user.getSex());
@@ -113,7 +113,7 @@ public class UserDB {
         {
             if (mysqlDB.rs.next())
             {
-                my.setId(mysqlDB.rs.getString(1));
+                my.setId(mysqlDB.rs.getInt(1));
                 my.setName(mysqlDB.rs.getString(2));
                 my.setPassword(mysqlDB.rs.getString(3));
                 my.setSex(mysqlDB.rs.getString(4));
@@ -128,6 +128,23 @@ public class UserDB {
         catch (SQLException e)
         {
             return my;
+        }
+    }
+    //修改用户信息
+    public static int userUpdate(int id,String name,String pwd){
+        mysqlDB.con=mysqlDB.getConnection();
+        try{
+            String sql="update user_info set userName=?,userPwd=? where userId=?";
+            mysqlDB.stmt=mysqlDB.con.prepareStatement(sql);
+            mysqlDB.stmt.setString(1,name);
+            mysqlDB.stmt.setString(2,pwd);
+            mysqlDB.stmt.setInt(3,id);
+            mysqlDB.stmt.executeUpdate();
+            return 0;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return -1;
         }
     }
 }

@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.example.walkwalk.mysqlDB.UserDB;
 import com.example.walkwalk.mysqlDB.user;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class login extends AppCompatActivity implements View.OnClickListener{
     private EditText et_username;
@@ -56,9 +59,10 @@ public class login extends AppCompatActivity implements View.OnClickListener{
                             String userPwd=user.myself.getPassword();
                             String userSex=user.myself.getSex();
                             String userAge=user.myself.getAge();
+                            int userId=user.myself.getId();
                             Intent intent1 = new Intent(login.this,HomeActivity.class);
                             Log.d(TAG, "用户："+userAge+" "+userName+" ");
-
+                            intent1.putExtra("UserId",userId);
                             intent1.putExtra("UserName",userName);
                             intent1.putExtra("UserPwd",userPwd);
                             intent1.putExtra("UserSex",userSex);
@@ -67,17 +71,23 @@ public class login extends AppCompatActivity implements View.OnClickListener{
                             break;
                         case 1:
                             now = "密码错误！";
-                            initEditString();
                             break;
                         case 2:
                             now = "用户不存在！";
-                            initEditString();
                             break;
                         default:
                             now ="网络异常...";
-                            initEditString();
                     }
                     Toast.makeText(this,now,Toast.LENGTH_SHORT).show();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            initEditString();
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.schedule(task, 1000);//3秒后执行TimeTask的run方法
+
 
                 }else{
                     Toast.makeText(this,"你没有输入用户名或密码",
